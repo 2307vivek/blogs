@@ -1,4 +1,4 @@
-package `in`.vivvvek.blogs.ui.theme
+package inn.vivvvek.blogs.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "in.vivvvek.blogs"
+    namespace = "inn.vivvvek.blogs"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "in.vivvvek.blogs"
+        applicationId = "inn.vivvvek.blogs"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

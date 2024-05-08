@@ -1,4 +1,4 @@
-package `in`.vivvvek.blogs
+package inn.vivvvek.blogs
 
 import org.junit.Test
 
