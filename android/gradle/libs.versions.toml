@@ -11,6 +11,7 @@ composeBom = "2023.08.00"
 googleServices = "4.4.1"
 firebaseBom = "33.0.0"
 playServicesAuth = "20.4.1"
+spotless = "5.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,4 +36,5 @@ google-play-auth = { group = "com.google.android.gms", name = "play-services-aut
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
