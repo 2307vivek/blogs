@@ -34,18 +34,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.auth.api.identity.Identity
 import dagger.hilt.android.AndroidEntryPoint
 import inn.vivvvek.blogs.auth.GoogleAuthClient
 import inn.vivvvek.blogs.ui.theme.BlogsTheme
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val googleAuthClient by lazy {
-        GoogleAuthClient(applicationContext, Identity.getSignInClient(applicationContext))
-    }
+    @Inject lateinit var googleAuthClient: GoogleAuthClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
