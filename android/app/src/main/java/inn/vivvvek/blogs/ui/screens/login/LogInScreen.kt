@@ -18,6 +18,7 @@ package inn.vivvvek.blogs.ui.screens.login
 import android.app.Activity.RESULT_OK
 import android.content.res.Configuration
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +32,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -44,6 +46,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -64,6 +67,8 @@ fun LogInScreen(
     val state by viewModel.state.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
+    val context = LocalContext.current
+
     var email by remember {
         mutableStateOf("")
     }
@@ -74,6 +79,12 @@ fun LogInScreen(
     LaunchedEffect(state.isLoggedIn) {
         if (state.isLoggedIn) {
             navigateToHome()
+        }
+    }
+
+    LaunchedEffect(state.error) {
+        if (state.error != null) {
+            Toast.makeText(context, state.error, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -92,6 +103,7 @@ fun LogInScreen(
     LogInScreen(
         email = email,
         password = password,
+        isLoading = state.loading,
         onEmailChange = { email = it },
         onPasswordChange = { password = it },
         onLogin = {
@@ -119,6 +131,7 @@ fun LogInScreen(
 fun LogInScreen(
     email: String,
     password: String,
+    isLoading: Boolean = false,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLogin: () -> Unit,
@@ -140,6 +153,7 @@ fun LogInScreen(
         LoginForm(
             email = email,
             password = password,
+            isLoading = isLoading,
             onEmailChange = onEmailChange,
             onPasswordChange = onPasswordChange,
             onLogin = onLogin,
@@ -149,9 +163,14 @@ fun LogInScreen(
         Text(text = "or", modifier = Modifier.padding(24.dp))
 
         Button(
-            onClick = onGoogleSignIn
+            onClick = onGoogleSignIn,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Log in with Google")
+            if (isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text(text = "Sign in with Google")
+            }
         }
     }
 }
@@ -160,6 +179,7 @@ fun LogInScreen(
 fun LoginForm(
     email: String,
     password: String,
+    isLoading: Boolean = false,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLogin: () -> Unit,
@@ -196,7 +216,11 @@ fun LoginForm(
         modifier = Modifier.fillMaxWidth(),
         onClick = onLogin
     ) {
-        Text(text = "Log In")
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            Text(text = "Sign in")
+        }
     }
 
     Spacer(modifier = Modifier.height(8.dp))
