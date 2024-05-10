@@ -57,7 +57,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LogInScreen(
-    viewModel: LoginViewModel,
+    viewModel: AuthViewModel,
     navigateToSignUP: () -> Unit,
     navigateToHome: () -> Unit
 ) {

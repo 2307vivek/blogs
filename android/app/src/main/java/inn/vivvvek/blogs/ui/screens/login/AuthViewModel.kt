@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class AuthViewModel @Inject constructor(
     private val auth: BlogAuth
 ) : ViewModel() {
 
