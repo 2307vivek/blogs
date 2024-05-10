@@ -24,10 +24,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import inn.vivvvek.blogs.auth.GoogleAuthClient
 import inn.vivvvek.blogs.ui.screens.login.LogInScreen
 import inn.vivvvek.blogs.ui.theme.BlogsTheme
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -44,7 +42,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     LogInScreen(
                         viewModel = hiltViewModel(),
-                        navigateToSignUP = {}
+                        navigateToSignUP = {},
+                        navigateToHome = {}
                     )
                 }
             }
