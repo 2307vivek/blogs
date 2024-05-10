@@ -41,35 +41,48 @@ class AuthViewModel @Inject constructor(
     }
 
     suspend fun signInWithGoogle(): IntentSender? {
+        _state.value = _state.value.copy(loading = true)
         return auth.signInWIthGoogle()
     }
 
     suspend fun signInWithIntent(intent: Intent) {
         val signInResult = auth.signInWithIntent(intent)
         _state.value = LoginState(
+            loading = false,
             isLoggedIn = auth.isLoggedIn,
-            user = auth.loggedInUser
+            user = auth.loggedInUser,
+            error = signInResult.error
         )
     }
 
     suspend fun signIn(email: String, pass: String) {
+        _state.value = _state.value.copy(loading = true)
         val signInResult = auth.signInWithEmail(email, pass)
+
         _state.value = LoginState(
+            loading = false,
             isLoggedIn = auth.isLoggedIn,
-            user = auth.loggedInUser
+            user = auth.loggedInUser,
+            error = signInResult.error
         )
     }
 
     suspend fun signUp(email: String, pass: String) {
+        _state.value = _state.value.copy(loading = true)
         val signInResult = auth.createUserWithEmail(email, pass)
+
         _state.value = LoginState(
+            loading = false,
             isLoggedIn = auth.isLoggedIn,
-            user = auth.loggedInUser
+            user = auth.loggedInUser,
+            error = signInResult.error
         )
     }
 }
 
 data class LoginState(
+    val loading: Boolean = false,
     val isLoggedIn: Boolean = false,
-    val user: AuthenticatedUser? = null
+    val user: AuthenticatedUser? = null,
+    val error: String? = null
 )
