@@ -30,7 +30,9 @@ class BlogAuth @Inject constructor(
     private val googleAuth: GoogleAuthClient,
     private val emailAuth: EmailPassAuth
 ) {
-    val isLoggedIn = auth.currentUser != null
+    val isLoggedIn: Boolean
+        get() = auth.currentUser != null
+
     val loggedInUser: AuthenticatedUser?
         get() = auth.currentUser?.run {
             AuthenticatedUser(
