@@ -21,6 +21,7 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,12 +51,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import inn.vivvvek.blogs.ui.theme.BlogsTheme
 import inn.vivvvek.blogs.ui.theme.Typography
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -168,6 +169,10 @@ fun LoginForm(
     onLogin: () -> Unit,
     onClickSignup: () -> Unit
 ) {
+    var isPasswordVisible by remember {
+        mutableStateOf(false)
+    }
+
     OutlinedTextField(
         value = email,
         label = { Text(text = "Email") },
@@ -181,7 +186,13 @@ fun LoginForm(
         label = "Password",
         onValueChange = onPasswordChange,
         modifier = Modifier.fillMaxWidth(),
-        visualTransformation = VisualTransformation.None
+        isPasswordVisible = isPasswordVisible,
+        onClickTrailingIcon = { isPasswordVisible = !isPasswordVisible },
+        visualTransformation = if (isPasswordVisible) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        }
     )
 
     Spacer(modifier = Modifier.height(16.dp))
@@ -198,7 +209,8 @@ fun LoginForm(
             append("Don't have an account? Sign Up")
             addStyle(SpanStyle(color = MaterialTheme.colorScheme.primary), 23, this.length)
         },
-        style = MaterialTheme.typography.bodyMedium
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.clickable(onClick = onClickSignup)
     )
 }
 
@@ -208,12 +220,10 @@ fun PasswordField(
     value: String,
     label: String = "",
     onValueChange: (String) -> Unit,
+    isPasswordVisible: Boolean,
+    onClickTrailingIcon: () -> Unit,
     visualTransformation: VisualTransformation
 ) {
-    var isPassWordVisible by remember {
-        mutableStateOf(false)
-    }
-
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -221,13 +231,13 @@ fun PasswordField(
         label = { Text(text = label) },
         visualTransformation = visualTransformation,
         trailingIcon = {
-            val icon = if (isPassWordVisible) {
+            val icon = if (isPasswordVisible) {
                 Icons.Filled.VisibilityOff
             } else Icons.Filled.Visibility
 
-            val description = if (isPassWordVisible) "Hide password" else "Show password"
+            val description = if (isPasswordVisible) "Hide password" else "Show password"
 
-            IconButton(onClick = { isPassWordVisible = !isPassWordVisible }) {
+            IconButton(onClick = onClickTrailingIcon) {
                 Icon(
                     imageVector = icon,
                     contentDescription = description
