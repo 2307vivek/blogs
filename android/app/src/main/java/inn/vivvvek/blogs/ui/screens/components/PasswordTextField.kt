@@ -16,9 +16,11 @@ fun PasswordField(
     modifier: Modifier = Modifier,
     value: String,
     label: String = "",
+    isError: Boolean = false,
     onValueChange: (String) -> Unit,
     isPasswordVisible: Boolean,
     onClickTrailingIcon: () -> Unit,
+    supportingText: @Composable() (() -> Unit)? = null,
     visualTransformation: VisualTransformation
 ) {
     OutlinedTextField(
@@ -26,7 +28,9 @@ fun PasswordField(
         onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(text = label) },
+        isError = isError,
         visualTransformation = visualTransformation,
+        supportingText = supportingText,
         trailingIcon = {
             val icon = if (isPasswordVisible) {
                 Icons.Filled.VisibilityOff
