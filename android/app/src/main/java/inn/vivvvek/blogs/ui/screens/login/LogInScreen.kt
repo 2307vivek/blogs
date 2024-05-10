@@ -30,12 +30,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -55,6 +50,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import inn.vivvvek.blogs.ui.screens.components.PasswordField
 import inn.vivvvek.blogs.ui.theme.BlogsTheme
 import inn.vivvvek.blogs.ui.theme.Typography
 import kotlinx.coroutines.launch
@@ -211,39 +207,6 @@ fun LoginForm(
         },
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.clickable(onClick = onClickSignup)
-    )
-}
-
-@Composable
-fun PasswordField(
-    modifier: Modifier = Modifier,
-    value: String,
-    label: String = "",
-    onValueChange: (String) -> Unit,
-    isPasswordVisible: Boolean,
-    onClickTrailingIcon: () -> Unit,
-    visualTransformation: VisualTransformation
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier,
-        label = { Text(text = label) },
-        visualTransformation = visualTransformation,
-        trailingIcon = {
-            val icon = if (isPasswordVisible) {
-                Icons.Filled.VisibilityOff
-            } else Icons.Filled.Visibility
-
-            val description = if (isPasswordVisible) "Hide password" else "Show password"
-
-            IconButton(onClick = onClickTrailingIcon) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = description
-                )
-            }
-        }
     )
 }
 
