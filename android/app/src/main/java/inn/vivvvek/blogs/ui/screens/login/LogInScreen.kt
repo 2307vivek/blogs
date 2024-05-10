@@ -217,7 +217,9 @@ fun LoginForm(
         onClick = onLogin
     ) {
         if (isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         } else {
             Text(text = "Sign in")
         }
