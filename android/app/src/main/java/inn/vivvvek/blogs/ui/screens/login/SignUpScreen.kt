@@ -16,6 +16,7 @@
 package inn.vivvvek.blogs.ui.screens.login
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +28,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -41,6 +45,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -58,6 +63,8 @@ fun SignUpScreen(
     navigateToSignIn: () -> Unit,
     navigateToHome: () -> Unit
 ) {
+    val context = LocalContext.current
+
     val state by viewModel.state.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -78,10 +85,17 @@ fun SignUpScreen(
         }
     }
 
+    LaunchedEffect(state.error) {
+        if (state.error != null) {
+            Toast.makeText(context, state.error, Toast.LENGTH_LONG).show()
+        }
+    }
+
     SignUpScreen(
         email = email,
         password = password,
         confirmPassword = confirmPassword,
+        isLoading = state.loading,
         onEmailChange = { email = it },
         onPasswordChange = { password = it },
         onConfirmPasswordChange = { confirmPassword = it },
@@ -99,6 +113,7 @@ fun SignUpScreen(
     email: String,
     password: String,
     confirmPassword: String,
+    isLoading: Boolean = false,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onConfirmPasswordChange: (String) -> Unit,
@@ -123,6 +138,7 @@ fun SignUpScreen(
             password = password,
             confirmPassword = confirmPassword,
             onEmailChange = onEmailChange,
+            isLoading = isLoading,
             onPasswordChange = onPasswordChange,
             onConfirmPasswordChange = onConfirmPasswordChange,
             onLogin = onLogin,
@@ -136,6 +152,7 @@ fun SignUpForm(
     email: String,
     password: String,
     confirmPassword: String,
+    isLoading: Boolean = false,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onConfirmPasswordChange: (String) -> Unit,
@@ -202,7 +219,11 @@ fun SignUpForm(
         onClick = onLogin,
         enabled = isPasswordsEqual
     ) {
-        Text(text = "Create a new account")
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            Text(text = "Create a new account")
+        }
     }
 
     Spacer(modifier = Modifier.height(8.dp))
