@@ -22,6 +22,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,6 +40,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +62,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun LogInScreen(
     viewModel: LoginViewModel,
-    navigateToSignUP: () -> Unit
+    navigateToSignUP: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -70,6 +73,12 @@ fun LogInScreen(
     }
     var password by remember {
         mutableStateOf("")
+    }
+
+    LaunchedEffect(state.isLoggedIn) {
+        if (state.isLoggedIn) {
+            navigateToHome()
+        }
     }
 
     val launcher = rememberLauncherForActivityResult(
@@ -84,6 +93,42 @@ fun LogInScreen(
         }
     }
 
+    LogInScreen(
+        email = email,
+        password = password,
+        onEmailChange = { email = it },
+        onPasswordChange = { password = it },
+        onLogin = {
+            coroutineScope.launch {
+                viewModel.signIn(email, password)
+            }
+        },
+        onGoogleSignIn = {
+            coroutineScope.launch {
+                val intentSender = viewModel.signInWithGoogle()
+                coroutineScope.launch {
+                    launcher.launch(
+                        IntentSenderRequest
+                            .Builder(intentSender ?: return@launch)
+                            .build()
+                    )
+                }
+            }
+        },
+        onClickSignup = navigateToSignUP
+    )
+}
+
+@Composable
+fun LogInScreen(
+    email: String,
+    password: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLogin: () -> Unit,
+    onGoogleSignIn: () -> Unit,
+    onClickSignup: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,38 +137,23 @@ fun LogInScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = state.user?.name ?: state.isLoggedIn.toString(),
+            text = "Blogs",
             style = Typography.displayLarge,
         )
         Spacer(modifier = Modifier.height(48.dp))
         LoginForm(
             email = email,
             password = password,
-            onEmailChange = { email = it },
-            onPasswordChange = { password = it },
-            onLogin = {
-                coroutineScope.launch {
-                    viewModel.signIn(email, password)
-                }
-            },
-            onClickSignup = navigateToSignUP
+            onEmailChange = onEmailChange,
+            onPasswordChange = onPasswordChange,
+            onLogin = onLogin,
+            onClickSignup = onClickSignup
         )
 
         Text(text = "or", modifier = Modifier.padding(24.dp))
 
         Button(
-            onClick = {
-                coroutineScope.launch {
-                    val intentSender = viewModel.signInWithGoogle()
-                    coroutineScope.launch {
-                        launcher.launch(
-                            IntentSenderRequest
-                                .Builder(intentSender ?: return@launch)
-                                .build()
-                        )
-                    }
-                }
-            }
+            onClick = onGoogleSignIn
         ) {
             Text(text = "Log in with Google")
         }
@@ -212,18 +242,18 @@ fun PasswordField(
 @Composable
 fun SignInPreview() {
     BlogsTheme {
-        Surface(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            LoginForm(
-                email = "email",
-                password = "password",
+            LogInScreen(
+                email = "",
+                password = "",
                 onEmailChange = {},
                 onPasswordChange = {},
-                onLogin = {},
-                onClickSignup = {}
-            )
+                onLogin = { /*TODO*/ },
+                onGoogleSignIn = { /*TODO*/ }) {
+            }
         }
     }
 }
