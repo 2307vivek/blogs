@@ -59,6 +59,14 @@ class AuthViewModel @Inject constructor(
             user = auth.loggedInUser
         )
     }
+
+    suspend fun signUp(email: String, pass: String) {
+        val signInResult = auth.createUserWithEmail(email, pass)
+        _state.value = LoginState(
+            isLoggedIn = auth.isLoggedIn,
+            user = auth.loggedInUser
+        )
+    }
 }
 
 data class LoginState(
