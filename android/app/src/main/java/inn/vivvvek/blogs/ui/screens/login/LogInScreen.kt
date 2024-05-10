@@ -137,7 +137,7 @@ fun LogInScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Blogs",
+            text = "Sign in",
             style = Typography.displayLarge,
         )
         Spacer(modifier = Modifier.height(48.dp))
