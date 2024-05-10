@@ -169,7 +169,7 @@ fun SignUpForm(
         mutableStateOf(true)
     }
 
-    LaunchedEffect(confirmPassword) {
+    LaunchedEffect(confirmPassword, password) {
         isPasswordsEqual = password == confirmPassword
     }
 
