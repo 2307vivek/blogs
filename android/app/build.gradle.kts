@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.icons.extended)
+    implementation(libs.compose.nav)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)

@@ -14,6 +14,7 @@ playServicesAuth = "20.4.1"
 spotless = "5.7.0"
 hilt = "2.48"
 hiltNavigation = "1.2.0"
+composeNav = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ google-play-auth = { group = "com.google.android.gms", name = "play-services-aut
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt"}
 hilt-nav = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation"}
+compose-nav = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNav" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
