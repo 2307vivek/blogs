@@ -76,17 +76,6 @@ class GoogleAuthClient @Inject constructor(
         }
     }
 
-    fun getSignedInUser(): AuthenticatedUser? =
-        auth.currentUser?.run {
-            AuthenticatedUser(
-                uid = uid,
-                name = displayName ?: "",
-                profilePic = photoUrl?.toString() ?: "",
-                phoneNumber = phoneNumber ?: "",
-                email = email ?: ""
-            )
-        }
-
     suspend fun signOut() {
         try {
             oneTapClient.signOut().await()

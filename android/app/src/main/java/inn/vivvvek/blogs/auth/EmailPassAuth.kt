@@ -38,7 +38,7 @@ class EmailPassAuth @Inject constructor(
                         name = displayName ?: "",
                         profilePic = photoUrl?.toString() ?: "",
                         phoneNumber = phoneNumber ?: "",
-                        email = email ?: ""
+                        email = this.email ?: ""
                     )
                 },
                 error = null
@@ -60,7 +60,7 @@ class EmailPassAuth @Inject constructor(
                         name = displayName ?: "",
                         profilePic = photoUrl?.toString() ?: "",
                         phoneNumber = phoneNumber ?: "",
-                        email = email ?: ""
+                        email = this.email ?: ""
                     )
                 },
                 error = null
