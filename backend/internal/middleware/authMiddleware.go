@@ -23,6 +23,6 @@ func AuthenticateToken(c *gin.Context) {
 		return
 	}
 
-	c.Set("decodedToken", decodedToken)
+	c.Set("uid", decodedToken.UID)
 	c.Next()
 }
