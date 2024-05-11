@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/2307vivek/blogs/internal/db"
+	"github.com/2307vivek/blogs/internal/models"
 	"github.com/2307vivek/blogs/utils"
 	"github.com/gilliek/go-opml/opml"
 	"github.com/mmcdole/gofeed"
@@ -23,7 +24,7 @@ func CreateJobs() {
 			continue
 		}
 
-		blog := Blog{Company: company, BlogTitle: feed.Title, Description: feed.Description, Link: feed.Link, FeedLink: feed.FeedLink, Image: feed.Image}
+		blog := models.Blog{Company: company, BlogTitle: feed.Title, Description: feed.Description, Link: feed.Link, FeedLink: feed.FeedLink, Image: feed.Image}
 		blogRes, err := blogs_collections.InsertOne(context.Background(), blog)
 		if err != nil {
 			log.Println("Unable to insert blog ", blog)
@@ -49,33 +50,18 @@ func getFeed(url string) (*gofeed.Feed, error) {
 	return feed, err
 }
 
-func parseFile() []Company {
+func parseFile() []models.Company {
 	docs, err := opml.NewOPMLFromFile("../../engineering_blogs.opml")
 	utils.FailOnError(err, "Failed to load opml file.")
 
 	outlines := docs.Outlines()
 
-	companies := []Company{}
+	companies := []models.Company{}
 
 	for _, outline := range outlines[0].Outlines {
-		companies = append(companies, Company{Title: outline.Title, HtmlUrl: outline.HTMLURL, XmlUrl: outline.XMLURL})
+		companies = append(companies, models.Company{Title: outline.Title, HtmlUrl: outline.HTMLURL, XmlUrl: outline.XMLURL})
 	}
 	return companies
-}
-
-type Company struct {
-	Title   string `bson:"title"`
-	HtmlUrl string `bson:"html_url"`
-	XmlUrl  string `bson:"xml_url"`
-}
-
-type Blog struct {
-	Company     Company       `bson:"company"`
-	BlogTitle   string        `bson:"blog_title"`
-	Description string        `bson:"description"`
-	Link        string        `bson:"link"`
-	FeedLink    string        `bson:"feed_link"`
-	Image       *gofeed.Image `bson:"image"`
 }
 
 type Article struct {
