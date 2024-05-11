@@ -13,8 +13,8 @@ import (
 func CreateJobs() {
 	companies := parseFile()
 
-	blogs_collections := db.MongoDB.Collection("blogs")
-	articles_collections := db.MongoDB.Collection("articles")
+	blogs_collections := db.MongoDB.Collection(db.BlogsCollection)
+	articles_collections := db.MongoDB.Collection(db.ArticleCollection)
 
 	for _, company := range companies {
 		feed, err := getFeed(company.XmlUrl)
