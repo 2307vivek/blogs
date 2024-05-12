@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package inn.vivvvek.blogs
+package inn.vivvvek.blogs.models
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+data class AuthenticatedUser(
+    val uid: String,
+    val name: String = "",
+    val profilePic: String = "",
+    val phoneNumber: String = "",
+    val email: String = "",
+)
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-}
+data class SignInResult(
+    val user: AuthenticatedUser?,
+    val error: String?
+)
