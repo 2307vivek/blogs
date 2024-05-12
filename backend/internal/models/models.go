@@ -18,10 +18,10 @@ type Article struct {
 }
 
 type Blog struct {
-	Company     Company       `bson:"company"`
-	BlogTitle   string        `bson:"blog_title"`
-	Description string        `bson:"description"`
-	Link        string        `bson:"link"`
-	FeedLink    string        `bson:"feed_link"`
-	Image       *gofeed.Image `bson:"image"`
+	Company     Company       `bson:"company" json:"company"`
+	BlogTitle   string        `bson:"blog_title" json:"blog_title"`
+	Description string        `bson:"description" json:"description"`
+	Link        string        `bson:"link" json:"link"`
+	FeedLink    string        `bson:"feed_link" json:"feed_link"`
+	Image       *gofeed.Image `bson:"image" json:"image"`
 }
