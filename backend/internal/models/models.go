@@ -3,9 +3,9 @@ package models
 import "github.com/mmcdole/gofeed"
 
 type Company struct {
-	Title   string `bson:"title"`
-	HtmlUrl string `bson:"html_url"`
-	XmlUrl  string `bson:"xml_url"`
+	Title   string `bson:"title" json:"title"`
+	HtmlUrl string `bson:"html_url" json:"html_url"`
+	XmlUrl  string `bson:"xml_url" json:"xml_url"`
 }
 
 type Blog struct {
