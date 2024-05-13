@@ -42,7 +42,7 @@ func GetLatestArticles(c *gin.Context) {
 	}
 
 	if len(articles) == 0 {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": "No more data."})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": "No more data"})
 		return
 	}
 
