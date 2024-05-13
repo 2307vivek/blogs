@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import inn.vivvvek.blogs.ui.screens.home.Home
+import inn.vivvvek.blogs.ui.screens.home.HomeScreen
 import inn.vivvvek.blogs.ui.screens.login.LogInScreen
 import inn.vivvvek.blogs.ui.screens.login.SignUpScreen
 
@@ -31,7 +31,7 @@ fun BlogNavigation() {
         }
 
         composable(Screen.Home.route) {
-            Home(
+            HomeScreen(
                 viewModel = hiltViewModel(),
                 navigateToSignIn = { navController.navigate(Screen.SignIn.route) }
             )
