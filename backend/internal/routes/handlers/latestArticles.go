@@ -46,5 +46,5 @@ func GetLatestArticles(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"articles": articles})
+	c.JSON(http.StatusOK, gin.H{"page": page, "articles": articles})
 }
