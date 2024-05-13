@@ -24,8 +24,12 @@ object BlogApiModule {
 
     private val retrofitBuilder = Retrofit.Builder()
         .baseUrl(NetworkUtils.BASE_URL)
-        .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
+        .addConverterFactory(json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
         .build()
 }
 
 fun String.toMediaType(): MediaType = MediaType.get("application/json; charset=utf-8")
+
+private val json = Json {
+    ignoreUnknownKeys = true
+}
