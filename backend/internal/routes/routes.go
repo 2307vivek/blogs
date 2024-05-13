@@ -18,5 +18,7 @@ func Routes(port int) {
 	router.GET("/articles/:company", handlers.FindArticlesByCompany)
 	router.GET("/articles", handlers.GetLatestArticles)
 
+	router.GET("/blogs", handlers.GetCompanies)
+
 	router.Run(fmt.Sprintf(":%d", port))
 }

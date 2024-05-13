@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func GetLatestArticles(c *gin.Context) {
+func GetCompanies(c *gin.Context) {
 	pageStr := c.Query("page")
 
 	page, err := utils.ValidatePage(pageStr)
@@ -21,12 +21,12 @@ func GetLatestArticles(c *gin.Context) {
 		return
 	}
 
-	collection := db.MongoDB.Collection(db.ArticleCollection)
+	collection := db.MongoDB.Collection(db.BlogsCollection)
 
-	articles := []models.Article{}
+	blogs := []models.Blog{}
 
-	paginationOpts := utils.CreatePagination(10, page).Paginate()
-	sortOpts := options.Find().SetSort(bson.D{{Key: "article.publishedparsed", Value: -1}})
+	paginationOpts := utils.CreatePagination(20, page).Paginate()
+	sortOpts := options.Find().SetSort(bson.D{{Key: "company.title", Value: 1}})
 	filter := bson.D{}
 
 	cursor, err := collection.Find(context.TODO(), filter, paginationOpts, sortOpts)
@@ -36,15 +36,15 @@ func GetLatestArticles(c *gin.Context) {
 		return
 	}
 
-	if err = cursor.All(context.TODO(), &articles); err != nil {
+	if err = cursor.All(context.TODO(), &blogs); err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"msg": "Some error occured"})
 		return
 	}
 
-	if len(articles) == 0 {
+	if len(blogs) == 0 {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": "No more data"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"page": page, "articles": articles})
+	c.JSON(http.StatusOK, gin.H{"page": page, "blogs": blogs})
 }
