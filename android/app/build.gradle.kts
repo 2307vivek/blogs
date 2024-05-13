@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlinxSerialization)
     id("com.google.gms.google-services")
     id("kotlin-kapt")
     alias(libs.plugins.hilt)
@@ -76,6 +77,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.nav)
+
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.retrofit)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

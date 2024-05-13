@@ -13,10 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package inn.vivvvek.blogs.ui.navigation
+package inn.vivvvek.blogs.data.network
 
-sealed class Screen(val route: String, val name: String) {
-    data object SignIn : Screen("signin", name = "Sign In")
-    data object SignUp : Screen("signup", name = "Sign Up")
-    data object Home : Screen(route = "home", name = "Home")
+import inn.vivvvek.blogs.models.Articles
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+interface BlogApiService {
+
+    @GET("articles")
+    suspend fun getLatestArticles(
+        @Query("page") page: Int
+    ): Articles
+
+    @GET("articles/{company}")
+    suspend fun getArticleByCompany(
+        @Query("page") page: Int,
+        @Path("company") companyName: String
+    ): Articles
 }

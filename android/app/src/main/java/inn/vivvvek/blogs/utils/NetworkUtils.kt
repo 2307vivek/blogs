@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package inn.vivvvek.blogs.ui.navigation
+package inn.vivvvek.blogs.utils
 
-sealed class Screen(val route: String, val name: String) {
-    data object SignIn : Screen("signin", name = "Sign In")
-    data object SignUp : Screen("signup", name = "Sign Up")
-    data object Home : Screen(route = "home", name = "Home")
+object NetworkUtils {
+    const val BASE_URL = "http://192.168.1.7:8080/"
 }

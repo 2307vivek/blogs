@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package inn.vivvvek.blogs.ui.navigation
+package inn.vivvvek.blogs.data.repository
 
-sealed class Screen(val route: String, val name: String) {
-    data object SignIn : Screen("signin", name = "Sign In")
-    data object SignUp : Screen("signup", name = "Sign Up")
-    data object Home : Screen(route = "home", name = "Home")
+import inn.vivvvek.blogs.data.network.BlogApiService
+import javax.inject.Inject
+
+class ArticlesRepository @Inject constructor(
+    private val api: BlogApiService
+) {
+
+    suspend fun getLatestArticles(page: Int) = api.getLatestArticles(page)
 }

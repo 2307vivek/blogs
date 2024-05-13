@@ -114,13 +114,11 @@ fun LogInScreen(
         onGoogleSignIn = {
             coroutineScope.launch {
                 val intentSender = viewModel.signInWithGoogle()
-                coroutineScope.launch {
-                    launcher.launch(
-                        IntentSenderRequest
-                            .Builder(intentSender ?: return@launch)
-                            .build()
-                    )
-                }
+                launcher.launch(
+                    IntentSenderRequest
+                        .Builder(intentSender ?: return@launch)
+                        .build()
+                )
             }
         },
         onClickSignup = navigateToSignUP
