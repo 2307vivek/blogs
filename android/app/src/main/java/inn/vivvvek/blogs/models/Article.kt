@@ -45,10 +45,3 @@ data class Article(
 data class Image(
     val url: String,
 )
-
-@Serializable
-data class Company(
-    val title: String,
-    @SerialName("html_url") val blogUrl: String,
-    @SerialName("xml_url") val blogFeedUrl: String,
-)
