@@ -16,11 +16,11 @@
 package inn.vivvvek.blogs.data.repository
 
 import inn.vivvvek.blogs.data.network.BlogApiService
+import inn.vivvvek.blogs.models.Articles
+import inn.vivvvek.blogs.models.Result
 import javax.inject.Inject
 
-class ArticlesRepository @Inject constructor(
-    private val api: BlogApiService
-) {
-
-    suspend fun getLatestArticles(page: Int) = api.getLatestArticles(page)
+interface ArticlesRepository {
+    suspend fun getLatestArticles(page: Int): Result<Articles>
+    suspend fun getArticleByCompany(page: Int, companyName: String): Result<Articles>
 }
