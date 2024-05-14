@@ -13,30 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package inn.vivvvek.blogs.data.network
+package inn.vivvvek.blogs.data.repository
 
-import inn.vivvvek.blogs.models.Articles
 import inn.vivvvek.blogs.models.Blogs
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import inn.vivvvek.blogs.models.Result
 
-interface BlogApiService {
+interface BlogRepository {
 
-    @GET("articles")
-    suspend fun getLatestArticles(
-        @Query("page") page: Int
-    ): Response<Articles>
-
-    @GET("articles/{company}")
-    suspend fun getArticleByCompany(
-        @Query("page") page: Int,
-        @Path("company") companyName: String
-    ): Response<Articles>
-
-    @GET("blogs")
-    fun getAllBlogs(
-        @Query("page") page: Int
-    ): Response<Blogs>
+    suspend fun getAllBlogs(page: Int): Result<Blogs>
 }
