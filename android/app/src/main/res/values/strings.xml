@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Blogs</string>
+    <string name="no_internet">Cannot connect to the internet.</string>
+    <string name="unauthorised">Unauthorised request.</string>
+    <string name="error_occurred">Some error occurred.</string>">
     <string name="web_client_id">971793188726-us883qvb4r6ntuq1pqgnc4arttpocmma.apps.googleusercontent.com</string>
 </resources>
