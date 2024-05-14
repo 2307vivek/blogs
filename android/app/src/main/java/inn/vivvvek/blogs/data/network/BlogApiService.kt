@@ -16,6 +16,9 @@
 package inn.vivvvek.blogs.data.network
 
 import inn.vivvvek.blogs.models.Articles
+import inn.vivvvek.blogs.models.Blog
+import inn.vivvvek.blogs.models.Blogs
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -25,11 +28,16 @@ interface BlogApiService {
     @GET("articles")
     suspend fun getLatestArticles(
         @Query("page") page: Int
-    ): Articles
+    ): Response<Articles>
 
     @GET("articles/{company}")
     suspend fun getArticleByCompany(
         @Query("page") page: Int,
         @Path("company") companyName: String
-    ): Articles
+    ): Response<Articles>
+
+    @GET("blogs")
+    fun getAllBlogs(
+        @Query("page") page: Int
+    ): Response<Blogs>
 }
