@@ -15,10 +15,8 @@
  */
 package inn.vivvvek.blogs.data.repository
 
-import inn.vivvvek.blogs.data.network.BlogApiService
 import inn.vivvvek.blogs.models.Articles
 import inn.vivvvek.blogs.models.Result
-import javax.inject.Inject
 
 interface ArticlesRepository {
     suspend fun getLatestArticles(page: Int): Result<Articles>

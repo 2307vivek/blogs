@@ -16,7 +16,6 @@
 package inn.vivvvek.blogs.data.network
 
 import inn.vivvvek.blogs.models.Articles
-import inn.vivvvek.blogs.models.Blog
 import inn.vivvvek.blogs.models.Blogs
 import retrofit2.Response
 import retrofit2.http.GET
