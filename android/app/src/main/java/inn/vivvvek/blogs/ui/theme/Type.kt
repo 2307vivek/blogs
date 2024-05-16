@@ -34,7 +34,7 @@ private val WorkSans = FontFamily(
 val Typography = Typography(
     titleMedium = TextStyle(
         fontFamily = WorkSans,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Normal,
         fontSize = 20.sp
     ),
 
