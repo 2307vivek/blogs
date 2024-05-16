@@ -15,6 +15,8 @@
  */
 package inn.vivvvek.blogs.ui.screens.components
 
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -23,8 +25,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
+import inn.vivvvek.blogs.R
 
 @Composable
 fun PasswordField(
@@ -48,16 +53,18 @@ fun PasswordField(
         supportingText = supportingText,
         trailingIcon = {
             val icon = if (isPasswordVisible) {
-                Icons.Filled.VisibilityOff
-            } else Icons.Filled.Visibility
+                R.drawable.baseline_visibility_off_24
+            } else R.drawable.baseline_visibility_24
 
             val description = if (isPasswordVisible) "Hide password" else "Show password"
 
-            IconButton(onClick = onClickTrailingIcon) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = description
-                )
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                IconButton(onClick = onClickTrailingIcon) {
+                    Icon(
+                        painter = painterResource(icon),
+                        contentDescription = description
+                    )
+                }
             }
         }
     )
