@@ -27,15 +27,11 @@ import inn.vivvvek.blogs.data.repository.impl.BlogRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
     @Binds
-    fun bindArticleRepository(apiService: BlogApiService): ArticlesRepository {
-        return ArticlesRepositoryImpl(apiService)
-    }
+    abstract fun bindArticleRepository(repositoryImpl: ArticlesRepositoryImpl): ArticlesRepository
 
     @Binds
-    fun bindBlogRepository(apiService: BlogApiService): BlogRepository {
-        return BlogRepositoryImpl(apiService)
-    }
+    abstract fun bindBlogRepository(repository: BlogRepositoryImpl): BlogRepository
 }
