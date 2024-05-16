@@ -22,7 +22,7 @@ import dagger.hilt.components.SingletonComponent
 import inn.vivvvek.blogs.data.network.BlogApiService
 import inn.vivvvek.blogs.utils.NetworkUtils
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
@@ -42,8 +42,6 @@ object BlogApiModule {
         .addConverterFactory(json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
         .build()
 }
-
-fun String.toMediaType(): MediaType = MediaType.get("application/json; charset=utf-8")
 
 private val json = Json {
     ignoreUnknownKeys = true
