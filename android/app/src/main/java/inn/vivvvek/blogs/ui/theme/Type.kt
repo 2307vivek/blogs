@@ -32,6 +32,12 @@ private val WorkSans = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    titleMedium = TextStyle(
+        fontFamily = WorkSans,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp
+    ),
+
     bodyLarge = TextStyle(
         fontFamily = WorkSans,
         fontWeight = FontWeight.Normal,
@@ -39,6 +45,36 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
+
+    bodyMedium = TextStyle(
+        fontFamily = WorkSans,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+    ),
+
+    bodySmall = TextStyle(
+        fontFamily = WorkSans,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+    ),
+
+    labelSmall = TextStyle(
+        fontFamily = WorkSans,
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
+    ),
+
+    labelMedium = TextStyle(
+        fontFamily = WorkSans,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
+    )
 
     /* Other default text styles to override
     titleLarge = TextStyle(
