@@ -15,10 +15,13 @@
  */
 package inn.vivvvek.blogs.data.repository
 
+import androidx.paging.PagingData
 import inn.vivvvek.blogs.models.Articles
+import inn.vivvvek.blogs.models.BlogArticle
 import inn.vivvvek.blogs.models.Result
+import kotlinx.coroutines.flow.Flow
 
 interface ArticlesRepository {
-    suspend fun getLatestArticles(page: Int): Result<Articles>
+    suspend fun getLatestArticles(): Flow<PagingData<BlogArticle>>
     suspend fun getArticleByCompany(page: Int, companyName: String): Result<Articles>
 }

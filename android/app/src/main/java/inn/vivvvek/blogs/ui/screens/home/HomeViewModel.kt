@@ -15,17 +15,17 @@
  */
 package inn.vivvvek.blogs.ui.screens.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import inn.vivvvek.blogs.auth.BlogAuth
 import inn.vivvvek.blogs.data.repository.ArticlesRepository
 import inn.vivvvek.blogs.models.AuthenticatedUser
 import inn.vivvvek.blogs.models.BlogArticle
-import inn.vivvvek.blogs.models.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,26 +40,20 @@ class HomeViewModel @Inject constructor(
     val isLoggedIn: Boolean
         get() = auth.isLoggedIn
 
-    val _state = MutableStateFlow(HomeScreenState())
-    val state: StateFlow<HomeScreenState> = _state
+    val _state = MutableStateFlow<PagingData<BlogArticle>>(PagingData.empty())
+    val state: StateFlow<PagingData<BlogArticle>> = _state
 
     init {
         getLatestArticles()
     }
 
     fun getLatestArticles() {
-        _state.value = HomeScreenState(isLoading = true)
         viewModelScope.launch {
-            when (val result = articlesRepository.getLatestArticles(1)) {
-                is Result.Success -> {
-                    _state.value = HomeScreenState(articles = result.data.articles, isLoading = false)
-                    Log.d("HomeViewModel", "getLatestArticles: ${result.data.articles[0]}")
+            articlesRepository.getLatestArticles()
+                .distinctUntilChanged()
+                .collect {
+                    _state.value = it
                 }
-                is Result.Error -> {
-                    _state.value = HomeScreenState(error = result.error, isLoading = false)
-                    Log.d("HomeViewModel", "getLatestArticles: ${result.error}")
-                }
-            }
         }
     }
 }

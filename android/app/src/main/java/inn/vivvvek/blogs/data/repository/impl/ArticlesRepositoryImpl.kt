@@ -15,10 +15,16 @@
  */
 package inn.vivvvek.blogs.data.repository.impl
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import inn.vivvvek.blogs.data.network.BlogApiService
+import inn.vivvvek.blogs.data.pagination.ArticlePaginationSource
 import inn.vivvvek.blogs.data.repository.ArticlesRepository
 import inn.vivvvek.blogs.models.Articles
+import inn.vivvvek.blogs.models.BlogArticle
 import inn.vivvvek.blogs.models.Result
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,22 +32,13 @@ import javax.inject.Singleton
 class ArticlesRepositoryImpl @Inject constructor(
     private val api: BlogApiService
 ) : ArticlesRepository {
-    override suspend fun getLatestArticles(page: Int): Result<Articles> {
-        try {
-            val response = api.getLatestArticles(page)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    return Result.Success(it)
-                }
+    override suspend fun getLatestArticles(): Flow<PagingData<BlogArticle>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10, prefetchDistance = 2),
+            pagingSourceFactory = {
+                ArticlePaginationSource(api)
             }
-            return if (response.code() == 401) {
-                Result.Error("Unauthorized")
-            } else {
-                Result.Error("Something went wrong")
-            }
-        } catch (e: Exception) {
-            return Result.Error("Cannot connect to server.")
-        }
+        ).flow
     }
 
     override suspend fun getArticleByCompany(page: Int, companyName: String): Result<Articles> {
