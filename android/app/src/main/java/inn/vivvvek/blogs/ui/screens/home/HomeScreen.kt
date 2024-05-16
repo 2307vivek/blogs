@@ -120,14 +120,13 @@ fun MainContent(
         ) {
             items(
                 items = blogArticles,
-                //key = { it.id }
+                // key = { it.id }
             ) {
                 ArticleItem(
                     blogArticle = it,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-
                         }
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 )

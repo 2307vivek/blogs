@@ -19,7 +19,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import inn.vivvvek.blogs.data.network.BlogApiService
 import inn.vivvvek.blogs.data.repository.ArticlesRepository
 import inn.vivvvek.blogs.data.repository.BlogRepository
 import inn.vivvvek.blogs.data.repository.impl.ArticlesRepositoryImpl
