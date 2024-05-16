@@ -22,7 +22,7 @@ val colorTextHeading = Color(0xFF163262)
 val colorTextBody = Color(0xFF4E4B66)
 val colorTextBodyLight = Color(0xFFB0B0C3)
 val colorBackground = Color(0xFFF7F7F7)
-val secondary = Color(0xFFFFB19D)
+val tertiary = Color(0xFFFFB19D)
 
 // Dark Colors
 val colorDarkText = Color(0xFFF7F7F7)
