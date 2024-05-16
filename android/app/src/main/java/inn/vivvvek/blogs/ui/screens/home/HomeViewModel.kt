@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
     val isLoggedIn: Boolean
         get() = auth.isLoggedIn
 
-    val _state = MutableStateFlow<PagingData<BlogArticle>>(PagingData.empty())
+    private val _state = MutableStateFlow<PagingData<BlogArticle>>(PagingData.empty())
     val state: StateFlow<PagingData<BlogArticle>> = _state
 
     init {

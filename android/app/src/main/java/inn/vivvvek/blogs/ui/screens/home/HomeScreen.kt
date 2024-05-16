@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,10 +43,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import inn.vivvvek.blogs.models.Article
 import inn.vivvvek.blogs.models.BlogArticle
 import inn.vivvvek.blogs.models.Company
 import inn.vivvvek.blogs.ui.screens.components.ArticleItem
+import inn.vivvvek.blogs.ui.screens.components.ErrorMessage
+import inn.vivvvek.blogs.ui.screens.components.articleList
 import inn.vivvvek.blogs.utils.DateUtils
 
 @Composable
@@ -59,13 +65,13 @@ fun HomeScreen(
         }
     }
 
-    val homeScreenState by viewModel.state.collectAsState()
+    val blogArticles = viewModel.state.collectAsLazyPagingItems()
 
-    HomeScreen(state = homeScreenState)
+    HomeScreen(blogArticles)
 }
 
 @Composable
-fun HomeScreen(state: HomeScreenState) {
+fun HomeScreen(blogArticles: LazyPagingItems<BlogArticle>) {
     Scaffold(
         topBar = {
             MainTopAppBar(title = "Explore")
@@ -76,17 +82,8 @@ fun HomeScreen(state: HomeScreenState) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (state.isLoading) {
-                CircularProgressIndicator()
-            } else if (state.error != null) {
-                Text(text = state.error)
-            } else {
-                MainContent(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it),
-                    blogArticles = state.articles
-                )
+            LazyColumn(modifier = Modifier.padding(it)) {
+                articleList(blogArticles)
             }
         }
     }
@@ -106,44 +103,6 @@ fun MainTopAppBar(
             )
         },
     )
-}
-
-@Composable
-fun MainContent(
-    modifier: Modifier = Modifier,
-    blogArticles: List<BlogArticle>
-) {
-    Box(modifier = modifier) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            items(
-                items = blogArticles,
-                // key = { it.id }
-            ) {
-                ArticleItem(
-                    blogArticle = it,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                        }
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun HomePreview() {
-    val state = HomeScreenState(
-        isLoading = false,
-        error = null,
-        articles = listOf(blogArticle, blogArticle, blogArticle)
-    )
-    HomeScreen(state)
 }
 
 @Composable

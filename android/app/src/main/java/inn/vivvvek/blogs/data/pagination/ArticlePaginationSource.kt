@@ -33,7 +33,7 @@ class ArticlePaginationSource @Inject constructor(
                 LoadResult.Error(IOException("Something went wrong"))
             }
         } catch (e: IOException) {
-            LoadResult.Error(IOException(e.message))
+            LoadResult.Error(IOException("Cannot connect to the internet."))
         }
     }
 }
