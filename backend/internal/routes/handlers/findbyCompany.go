@@ -28,6 +28,20 @@ func FindArticlesByCompany(c *gin.Context) {
 		return
 	}
 
+	articles, err := FindArticlesByCompanyName(companyName, page)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"msg": "Some error occured"})
+	}
+
+	if len(articles) == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": "No data."})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"page": page, "articles": articles})
+}
+
+func FindArticlesByCompanyName(companyName string, page int) ([]models.Article, error) {
 	collection := db.MongoDB.Collection(db.ArticleCollection)
 	filter := bson.D{{Key: "company.title", Value: companyName}}
 
@@ -37,19 +51,12 @@ func FindArticlesByCompany(c *gin.Context) {
 	cursor, err := collection.Find(context.TODO(), filter, opts)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"msg": "Some error occured"})
-		return
+		return nil, err
 	}
 
 	if err = cursor.All(context.TODO(), &articles); err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"msg": "Some error occured"})
-		return
+		return nil, err
 	}
 
-	if len(articles) == 0 {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": "Invalid page number."})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"page": page, "articles": articles})
+	return articles, nil
 }
