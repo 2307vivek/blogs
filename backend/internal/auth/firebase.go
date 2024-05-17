@@ -14,7 +14,7 @@ import (
 var AuthClient *auth.Client
 
 func InitFirebase() {
-	serviceAccountKeyPath, err := filepath.Abs("../../service_account_key.json")
+	serviceAccountKeyPath, err := filepath.Abs("service_account_key.json")
 	utils.FailOnError(err, "Failed to load service account key file.")
 
 	opt := option.WithCredentialsFile(serviceAccountKeyPath)
@@ -25,5 +25,5 @@ func InitFirebase() {
 	client, err := firebaseApp.Auth(context.Background())
 	utils.FailOnError(err, "Unable to create auth client")
 
-	 AuthClient = client
+	AuthClient = client
 }

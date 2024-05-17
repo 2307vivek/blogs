@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load(".env")
 	utils.FailOnError(err, "Failed to load .env")
 	db.InitDatabase()
 	go jobs.RunUpdateBlogCron()
