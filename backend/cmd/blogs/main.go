@@ -5,8 +5,6 @@ import (
 	"github.com/2307vivek/blogs/internal/db"
 	"github.com/2307vivek/blogs/internal/jobs"
 
-	"github.com/2307vivek/blogs/internal/jobs"
-
 	"github.com/2307vivek/blogs/internal/routes"
 	"github.com/2307vivek/blogs/utils"
 	"github.com/joho/godotenv"
