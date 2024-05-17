@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func FindArticlesByCompany(c *gin.Context) {
@@ -47,8 +48,9 @@ func FindArticlesByCompanyName(companyName string, page int) ([]models.Article, 
 
 	articles := []models.Article{}
 
-	opts := utils.CreatePagination(10, page).Paginate()
-	cursor, err := collection.Find(context.TODO(), filter, opts)
+	paginationOpts := utils.CreatePagination(10, page).Paginate()
+	sortOpts := options.Find().SetSort(bson.D{{Key: "article.publishedparsed", Value: -1}})
+	cursor, err := collection.Find(context.TODO(), filter, paginationOpts, sortOpts)
 
 	if err != nil {
 		return nil, err
